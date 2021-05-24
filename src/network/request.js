@@ -8,16 +8,16 @@ export function request(config) {
   })
 
   //2.拦截器
-  // instance.interceptors.request.use(success => {
-  //   console.log(success);
-  //   return success
-  // }, error => {
-  //   console.log(error);
-  // })
+  instance.interceptors.request.use(success => {
+    return success
+  }, error => {
+    // console.log(error);
+  })
 
   instance.interceptors.response.use(res => {
     return res.data
   }, err => {
+    console.log(err);
   })
 
   //3.发送网络请求

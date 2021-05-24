@@ -11,5 +11,14 @@ export default {
 </script>
 
 <style scoped>
+.back-top{
+  position: fixed;
+  right: 6px;
+  bottom: 50px;
+}
 
+.back-top img{
+  width: 43px;
+  height: 43px;
+}
 </style>

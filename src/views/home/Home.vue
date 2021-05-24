@@ -3,7 +3,8 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <scroll class="content">
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true"
+            @pullingUp="pullingUp">
       <home-swiper :banners="banners"></home-swiper>
       <home-recommend :recommends="recommends"></home-recommend>
       <home-feature></home-feature>
@@ -12,6 +13,7 @@
                    @tabClick="tabClick"></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
+    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -24,6 +26,7 @@ import NavBar from "@/components/common/navbar/NavBar";
 import TabControl from "@/components/content/tabcontrol/TabControl";
 import GoodsList from "@/components/content/goods/GoodsList";
 import Scroll from "@/components/common/scroll/Scroll";
+import BackTop from "@/components/content/backtop/BackTop";
 
 import {getHomeData, getHomeGoods} from "@/network/home";
 
@@ -37,17 +40,19 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
+    BackTop
   },
   data() {
     return {
       banners: [],
       recommends: [],
       goods: {
-        pop: {page: 0, list: []},
-        new: {page: 0, list: []},
-        sell: {page: 0, list: []}
+        'pop': {page: 0, list: []},
+        'new': {page: 0, list: []},
+        'sell': {page: 0, list: []}
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShowBackTop: false
     }
   },
   computed: {
@@ -77,6 +82,16 @@ export default {
           break
       }
     },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0,)
+    },
+    contentScroll(position) {
+      this.isShowBackTop = (-position.y) > 1000
+    },
+    pullingUp() {
+      this.getHomeGoods(this.currentType)
+      this.$refs.scroll.scroll.refresh()
+    },
     //网络请求
     getHomeData() {
       getHomeData().then(res => {
@@ -89,8 +104,10 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
+
+        this.$refs.scroll.finishPullUp()
       })
-    }
+    },
   }
 }
 </script>
