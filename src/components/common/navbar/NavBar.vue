@@ -23,7 +23,6 @@ export default {
   display: flex;
   line-height: 44px;
   text-align: center;
-  /*height: 44px;*/
   box-shadow: 0 1px 1px rgba(0, 125, 220, 0.1);
 }
 

@@ -1,11 +1,14 @@
 <template>
   <div id="app" class="wrapper">
-    <router-view></router-view>
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
     <main-tab-bar></main-tab-bar>
   </div>
 </template>
 <script>
 import MainTabBar from "@/components/content/mainTabbar/MainTabBar";
+
 export default {
   name: 'app',
   components: {
@@ -15,4 +18,8 @@ export default {
 </script>
 <style>
 @import "assets/css/base.css";
+
+* {
+  font-weight: bold;
+}
 </style>

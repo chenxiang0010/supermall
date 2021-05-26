@@ -25,10 +25,6 @@ export default {
   },
   computed: {
     isActive() {
-      // /home -> item1(/home) = true
-      // /home -> item1(/category) = false
-      // /home -> item1(/cart) = true
-      // /home -> item1(/profile) = true
       return this.$route.path.indexOf(this.path) !== -1
     },
     activeStyle() {
